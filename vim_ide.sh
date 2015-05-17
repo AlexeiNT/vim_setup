@@ -1,9 +1,12 @@
 #!/bin/bash
-USER_VIMRC_FILE="./test.txt"
-USER_VIMRC_FILE2=$(vim --version | grep '^\ \{1,\}\ *user\ *vimrc\ *file:\ *' | sed 's/^\s\{1,\}\s*user\s*vimrc\s*file:\s*"\(.*\)"/\1/')
-EOF="\r\n"
+USER_VIMRC_FILE=$(vim --version | grep '^\ \+.*:\ "$HOME[\\,\/].vimrc"' | sed 's/^\s\+.*:\ "\($HOME[\\,\/].vimrc\)"/\1/')
+printf "User vim rc file was founded by path:\n%s\n\n" "$USER_VIMRC_FILE"
 
-printf "User vim rc filewas founded by path:\n$USER_VIMRC_FILE\n"
+USER_VIMFILES_DIRECTORY=$(vim --version | grep '^\ \+.\+".\+[\\,\/].\+[\\,\/]vimrc' | sed 's/^\s\+.\+:\ "\(.\+[\\,\/].\+[\\,\/]\)vimrc"/\1/')
+USER_PLUGINS_DIRECTORY="${USER_VIMFILES_DIRECTORY}bundle\\"
+printf "User vim plugin directory was founded by path:\n%s\n\n" "$USER_PLUGINS_DIRECTORY"
+
+EOF="\r\n"
 
 declare -a COMMON_SETTINGS=(\
 '"  Показывать номера строк'\ 
@@ -105,4 +108,4 @@ function SetupVim {
 
 
 
-SetupVim
+#SetupVim
